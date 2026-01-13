@@ -22,6 +22,8 @@ npm install
 PORT                       = ********
 PRODUCT_MICROSERVICES_HOST = ********
 PRODUCT_MICROSERVICES_PORT = ********
+ORDERS_MICROSERVICES_HOST  = ********
+ORDERS_MICROSERVICES_PORT  = ********
 ```
 
 4.- Run the service in development
