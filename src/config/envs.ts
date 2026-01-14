@@ -3,33 +3,27 @@ import * as joi from 'joi'
 
 interface EnvVars {
    PORT: number;
-   PRODUCT_MICROSERVICES_HOST: string;
-   PRODUCT_MICROSERVICES_PORT: number;
-   ORDERS_MICROSERVICES_HOST: string;
-   ORDERS_MICROSERVICES_PORT: number;
+   NATS_SERVERS: string[]
 }
 
-const envSchema  = joi.object({
+const envSchema = joi.object({
    PORT: joi.number().required(),
-   PRODUCT_MICROSERVICES_HOST: joi.string().required(),
-   PRODUCT_MICROSERVICES_PORT: joi.number().required(),
-   ORDERS_MICROSERVICES_HOST: joi.string().required(),
-   ORDERS_MICROSERVICES_PORT: joi.number().required(),
+   NATS_SERVERS: joi.array().items(joi.string()).required(),
 }).unknown(true);
 
 
-const { error, value } = envSchema.validate( process.env );
+const { error, value } = envSchema.validate({
+   ...process.env,
+   NATS_SERVERS: process.env.NATS_SERVERS?.split(",")
+});
 
-if ( error ) {
-   throw new Error(`Config validation error: ${ error.message }`);
+if (error) {
+   throw new Error(`Config validation error: ${error.message}`);
 }
 
 const envVars: EnvVars = value;
 
 export const envs = {
    PORT: envVars.PORT,
-   PRODUCT_MICROSERVICES_HOST: envVars.PRODUCT_MICROSERVICES_HOST,
-   PRODUCT_MICROSERVICES_PORT: envVars.PRODUCT_MICROSERVICES_PORT,
-   ORDERS_MICROSERVICES_HOST:  envVars.ORDERS_MICROSERVICES_HOST,
-   ORDERS_MICROSERVICES_PORT:  envVars.ORDERS_MICROSERVICES_PORT,
+   NATS_SERVERS: envVars.NATS_SERVERS,
 }

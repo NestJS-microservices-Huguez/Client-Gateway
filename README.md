@@ -19,19 +19,21 @@ npm install
 
 3.- rename .env.template to .env and write variables
 ```
-PORT                       = ********
-PRODUCT_MICROSERVICES_HOST = ********
-PRODUCT_MICROSERVICES_PORT = ********
-ORDERS_MICROSERVICES_HOST  = ********
-ORDERS_MICROSERVICES_PORT  = ********
+PORT         = ********
+NATS_SERVERS = ********
 ```
 
-4.- Run the service in development
-```
-npm run dev
-```
-
-## Nats
+4.- Nats
 ```
 docker run -d --name nats-server -p 4222:4222 -p 8222:8222 nats 
+```
+
+5.- Got to
+```
+http://localhost:8222/
+```
+
+6.- Run the service in development
+```
+npm run dev
 ```
