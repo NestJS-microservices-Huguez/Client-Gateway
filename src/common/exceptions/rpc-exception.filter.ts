@@ -11,6 +11,13 @@ export class ExceptionFilter implements ExceptionFilter {
 
       const errorRpc = exception.getError()
 
+      if ( errorRpc.toString().includes("Empty response") ) {
+         return response.status( 500 ).json({ 
+            status: 500, 
+            message: errorRpc.toString().substring( 0, errorRpc.toString().indexOf( "(" )-1 )
+          })
+      }
+
       if ( typeof errorRpc === 'object' && 'status' in errorRpc && 'message' in errorRpc ) {
          return response.status( errorRpc.status ).json({ ...errorRpc })
       }
